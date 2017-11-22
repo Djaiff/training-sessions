@@ -2,5 +2,11 @@
 # these are files where the content may have been updated to correspond
 # to the level of the session or any other reason
 
-^formation
+/formation*
 
+# ignore dot files...
+/\.*
+/shiny/\.*
+
+# ignore .Rproj metadata
+*.Rproj
