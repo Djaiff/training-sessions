@@ -1,0 +1,6 @@
+# ignore directories which concern some actual training sessions
+# these are files where the content may have been updated to correspond
+# to the level of the session or any other reason
+
+^formation
+
