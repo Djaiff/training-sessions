@@ -10,3 +10,4 @@
 
 # ignore .Rproj metadata
 *.Rproj
+.Rproj.user
