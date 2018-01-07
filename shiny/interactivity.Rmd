@@ -1,3 +1,14 @@
+---
+  runtime: shiny
+  output:
+    ioslides_presentation:
+      css: css/shiny_niv1.css
+      highlight: haddock
+      smaller: yes
+      transition: slower
+      widescreen: yes
+---
+
 # Intéractivité et communication
 
 ## Intéractivité et communication | Premier lancement
