@@ -59,7 +59,7 @@ en créant un nouveau projet
 
 - L'application créée :
 
-    - Repose sur deux scripts : __ui.R__ et __server.R__, ou un seul : __app.R__
+    - Repose sur deux scripts : __ui.R__ et __server.R__.
     - Utilise par défaut le _sidebar layout_ (détaillé plus tard)
 
 Lors du développement, R Studio fournit des boutons utiles :
@@ -82,104 +82,81 @@ knitr::include_graphics("img/stop.png")
 
 ## Structure d'une application
 
-Lorsque vous créez un projet Shiny depuis R Studio, vous obtenez soit un script nommé _app.R_ soit deux scripts nommés _ui.R_ et _server.R_. Dans les deux cas, l'application résultante est la même (cf. figure \ref{hello_shiny}, page \pageref{hello_shiny}), il s'agit de deux manières différentes de développer :
+Lorsque vous créez un projet Shiny depuis R Studio, deux scripts nommés _ui.R_ et _server.R_.
 
-- Mono-script _app.R_: on définit deux objets, le script se termine pas l'instruction `shiny::shinyApp(ui, server)`
-- Bi-script _ui.R_ et _server.R_ (conseillé): on définit les objets sus-mentionés dans deux scripts distincts, on lance l'application avec l'instruction `shiny::runApp(appDir)`
+- On lance l'application avec l'instruction `shiny::runApp(appDir)`
 
 ![Application de base: \og Hello shiny ! \fg\label{hello_shiny}](img/hello_shiny.png)
 
+## Principes fondamentaux
 
-### Un seul fichier
+__La définition de l'interface utilisateur : ui.R__
 
-- Enregistré sous le nom __app.R__
-- Se terminant par la commande shinyApp()
-- Pour les applications légères
+  - Déclaration des inputs
+  - Placement des outputs
+  - Ajout de textes, descriptions, images, etc.
 
-```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/single_app.png")
+__La partie serveur/calculs : server.R__
+
+  - Déclaration et calcul des outputs.
+  - Manipulation des données sous conditionnement d'input(s).
+  - Codage **R** standard, etc.
+
+## Interface: ui.R 
+
+__Deux types d'éléments__
+
+- xxInput(inputId = ..., ...) :
+
+    * définit un élément qui permet une action de l'utilisateur ;
+    * accessible côté serveur avec son identifiant __input$inputID__.
+
+```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
+knitr::include_graphics("img/xxInput.png")
 ```
 
+- xxOutput(ouputId = ...) :
 
-```{r, eval = FALSE}
-library(shiny)
-ui <- fluidPage(
-  sliderInput(inputId = "num", label = "Choose a number", 
-              value = 25, min = 1, max = 100),  
-  plotOutput("hist")
-)
-server <- function(input, output) {  
-  output$hist <- renderPlot({
-    hist(rnorm(input$num))  
-  }) 
-}
-shinyApp(ui = ui, server = server)
+    * fait référence à un output créé et défini côté serveur ;
+    * en général : graphiques et tableaux.
+
+```{r, out.width='40%', dpi=220, fig.align='center', echo=FALSE}
+knitr::include_graphics("img/xxOutput.png")
 ```
 
-### Deux fichiers
+## Serveur: server.R
 
-- Côté interface utilisateur dans le script __ui.R__
-- Côté serveur dans le script __server.R__
+Le serveur manipule deux liste __input__, __output__. La définition des output se fait à l'aide des fonctions `renderXX({expr})`. À l'intérieur de ces fonctions, on calcule et retourne une sortie, dépendante d'input(s), via une expression __R__.
 
-```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/dual_apps.png")
+```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
+knitr::include_graphics("img/renderXX.png")
 ```
 
-__ui.R__
-```{r, eval = FALSE}
-library(shiny)
-fluidPage(
-  sliderInput(inputId = "num", label = "Choose a number", 
-              value = 25, min = 1, max = 100),  
-  plotOutput("hist")
-)
-```
+## Global : global.R
 
-__server.R__
-```{r, eval = FALSE}
-library(shiny)
-function(input, output) {  
-  output$hist <- renderPlot({hist(rnorm(input$num))}) 
-}
-```
-
-### UI en HTML
-
-Même si en général on code l'interface dans un script __R__, il est également possible de la coder entièrement dans un fichier HTML. Plus d'informations à cette adresse http://shiny.rstudio.com/articles/html-ui.html
-
-- Côté interface utilisateur, un fichier __index.html__ dans le répertoire  ``www`` (images, feuilles de style, librairies Javascript, \dots).
-- Côté serveur, un script __server.R__
-
-```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/html_apps.png")
-```
-
-### Données/fichiers complémentaires
-
-Côté serveur, la session s'éxecute dans le répertoire où se trouvent les scripts __R__ de l'application (en général ui.R et server.R). On peut donc accéder de façon relative à tous les objets présents dans le dossier de l'application.
-
-Côté interface, l'application web, comme de convention, accède à tous les éléments présents dans le dossier _www_
-
-```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/more_apps.png")
-```
-
-### Partage ui <-> server
-
-__Le server et l'ui communiquent uniquement par le biais des inputs et des outputs__
-
-- Nous pouvons ajouter un script nommé **global.R** pour partager des éléments (variables,  packages, ...) entre la partie __ui__ et la partie __server__ 
+Nous pouvons ajouter un script nommé **global.R** pour partager des éléments (variables,  packages, ...) entre la partie __ui__ et la partie __server__ 
 
 - Tout ce qui est présent dans le **global.R** est visible à la fois dans le __ui.R__ et dans le __server.R__
 
 - Le script **global.R** est chargé uniquement une seule fois au lancement de l'application
 
-- Dans le cas d'une utilisation avec un _shiny-server_, les objets globaux sont également partagés entre les utilisateurs
+- Si l'application est utilisée par plusieurs personnes en même temps les objet définis dans **global.R** sont commmuns à tous.
+
+
+## Partage ui <-> server
+
+__Le server et l'ui communiquent uniquement par le biais des inputs et des outputs__
+
+
+![Dialogue \og Interface <> Serveur \fg  \label{shiny_process}](img/shiny_process.png)
+
+Quelques remarques importantes : 
+    
+  -  \og Interface - __ui.R__\fg{}  et \og Serveur - __server.R__\fg{} communiquent uniquement par le biais des inputs et des outputs.
+  - Par défaut, un output est mis à jour chaque fois qu'un input en lien change.
 
 
 ### Exemple de présentation
-
-Dans la suite, on se pose dans le cas d'une application _duale_
 
 **ui.R**:
 
@@ -232,58 +209,6 @@ Cet exemple simple nous permet de déduire le fonctionnement suivant :
 - Côté **server**, nous créons un graphique \og `output$distPlot <- renderPlot({...})` \fg{} et l'appelons dans l' **ui** avec  \og `plotOutput(outputId = "distPlot")` \fg : c'est comme cela que le **server** retourne des objets à l'**ui** !
 
 
-Nous illustrons sur la figure \ref{shiny_process}, page \pageref{shiny_process}, la communication entre l'interface et le serveur grâce aux identifiants.
-
-![Dialogue \og Interface <> Serveur \fg  \label{shiny_process}](img/shiny_process.png)
-
-Quelques remarques importantes : 
-    
-  -  \og Interface - __ui.R__\fg{}  et \og Serveur - __server.R__\fg{} communiquent uniquement par le biais des inputs et des outputs.
-  - Par défaut, un output est mis à jour chaque fois qu'un input en lien change.
-
-## Principes fondamentaux
-
-__La définition de l'interface utilisateur : ui.R__
-
-  - Déclaration des inputs
-  - Placement des outputs
-  - Ajout de textes, descriptions, images, etc.
-
-__La partie serveur/calculs : server.R__
-
-  - Déclaration et calcul des outputs.
-  - Manipulation des données sous conditionnement d'input(s).
-  - Codage **R** standard, etc.
-
-## Interface: ui.R 
-
-__Deux types d'éléments__
-
-- xxInput(inputId = ..., ...) :
-
-    * définit un élément qui permet une action de l'utilisateur ;
-    * accessible côté serveur avec son identifiant __input$inputID__.
-
-```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/xxInput.png")
-```
-
-- xxOutput(ouputId = ...) :
-
-    * fait référence à un output créé et défini côté serveur ;
-    * en général : graphiques et tableaux.
-
-```{r, out.width='40%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/xxOutput.png")
-```
-
-## Serveur: server.R
-
-Le serveur manipule deux liste __input__, __output__. La définition des output se fait à l'aide des fonctions `renderXX({expr})`. À l'intérieur de ces fonctions, on calcule et retourne une sortie, dépendante d'input(s), via une expression __R__.
-
-```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/renderXX.png")
-```
 
 # Structurer sa page
 
