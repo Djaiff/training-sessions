@@ -7,7 +7,7 @@ output:
   pdf_document:
     latex_engine: xelatex
     includes:
-      in_header: header.tex
+      in_header: ../header.tex
 ---
 
 # Premiers pas

@@ -3,18 +3,7 @@ title: "Présentation R - Shiny"
 author: 
   - "Jeffery P., jeffery.petit@datastorm.fr"
   - "Benoit T., benoit.thieurmel@datastorm.fr"
-header-includes:
-  - \usepackage[utf8]{inputenc}
-  - \usepackage[french]{babel}
-  - \usepackage[T1]{fontenc}
-  - \usepackage{geometry}
-  - \geometry{hmargin=2.5cm,vmargin=2.5cm}
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancy}
-  - \fancyhead[LE, LO]{}
-  - \fancyfoot[CE, CO]{Introduction à Shiny}
-  - \fancyfoot[LE, RO]{\copyright 2018 Dastastorm}
-  - \fancyfoot[RE, LO]{\thepage}
+  - "Titouan R., titouan.robert@datastorm.fr"
 output:
   pdf_document:
     toc: true
@@ -23,6 +12,9 @@ output:
     highlight: kate
     # “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, “haddock”
     fig_caption: yes
+    latex_engine: xelatex
+    includes:
+      in_header: ../header.tex
 ---
 
 \fontfamily{cmr}
@@ -47,7 +39,7 @@ Plus de détails sur:
 
 Comme illustré sur la figure \ref{server_R}, \pageref{server_R}, une application __shiny__ nécessite un ordinateur/serveur éxécutant des instructions __R__. La communication avec l'interface utilisateur se fait par l'intermédiaire d'identifiants. 
 
-![Serveur et communication\label{server_R}](img/server_R.png)
+![Serveur et communication\label{server_R}](../../img/server_R.png)
 
 
 # Créer une première application avec shiny
@@ -74,8 +66,8 @@ Lors du développement, R Studio fournit des boutons utiles :
 
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/run_app.png")
-knitr::include_graphics("img/stop.png")
+knitr::include_graphics("../../img/run_app.png")
+knitr::include_graphics("../../img/stop.png")
 ```
 
 # Intéractivité et communication
@@ -86,7 +78,7 @@ Lorsque vous créez un projet Shiny depuis R Studio, deux scripts nommés _ui.R_
 
 - On lance l'application avec l'instruction `shiny::runApp(appDir)`
 
-![Application de base: \og Hello shiny ! \fg\label{hello_shiny}](img/hello_shiny.png)
+![Application de base: \og Hello shiny ! \fg\label{hello_shiny}](../../img/hello_shiny.png)
 
 ## Principes fondamentaux
 
@@ -112,7 +104,7 @@ __Deux types d'éléments__
     * accessible côté serveur avec son identifiant __input$inputID__.
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/xxInput.png")
+knitr::include_graphics("../../img/xxInput.png")
 ```
 
 - xxOutput(ouputId = ...) :
@@ -121,7 +113,7 @@ knitr::include_graphics("img/xxInput.png")
     * en général : graphiques et tableaux.
 
 ```{r, out.width='40%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/xxOutput.png")
+knitr::include_graphics("../../img/xxOutput.png")
 ```
 
 ## Serveur: server.R
@@ -129,7 +121,7 @@ knitr::include_graphics("img/xxOutput.png")
 Le serveur manipule deux liste __input__, __output__. La définition des output se fait à l'aide des fonctions `renderXX({expr})`. À l'intérieur de ces fonctions, on calcule et retourne une sortie, dépendante d'input(s), via une expression __R__.
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/renderXX.png")
+knitr::include_graphics("../../img/renderXX.png")
 ```
 
 ## Global : global.R
@@ -148,7 +140,7 @@ Nous pouvons ajouter un script nommé **global.R** pour partager des éléments 
 __Le server et l'ui communiquent uniquement par le biais des inputs et des outputs__
 
 
-![Dialogue \og Interface <> Serveur \fg  \label{shiny_process}](img/shiny_process.png)
+![Dialogue \og Interface <> Serveur \fg  \label{shiny_process}](../../img/shiny_process.png)
 
 Quelques remarques importantes : 
     
@@ -232,7 +224,7 @@ shinyUI(fluidPage(
 
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/sidabar.png")
+knitr::include_graphics("../../img/sidabar.png")
 ```
 
 ## Contenu grisé : \og`wellPanel`\fg
@@ -252,7 +244,7 @@ shinyUI(fluidPage(
 
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/wellPanel.png")
+knitr::include_graphics("../../img/wellPanel.png")
 ```
 
 ## Page à onglets: \og`navbarPage`\fg
@@ -293,7 +285,7 @@ shinyUI(
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/navbar.png")
+knitr::include_graphics("../../img/navbar.png")
 ```
 
 ## Organisation du contenu en onglets: \og`tabsetPanel`\fg
@@ -317,7 +309,7 @@ shinyUI(fluidPage(
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/tabpanel.png")
+knitr::include_graphics("../../img/tabpanel.png")
 ```
 
 ## Onglets verticaux: \og`navlistPanel`\fg
@@ -335,7 +327,7 @@ shinyUI(fluidPage(
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/navList.png")
+knitr::include_graphics("../../img/navList.png")
 ```
 
 ## Diviser pour mieux organiser : \og Grid Layout \fg
@@ -360,7 +352,7 @@ tabPanel(title = "Summary",
 
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/grid.png")
+knitr::include_graphics("../../img/grid.png")
 ```
 
 ## Inclure du des balises HTML
@@ -372,7 +364,7 @@ names(shiny::tags)
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/tags.png")
+knitr::include_graphics("../../img/tags.png")
 ```
 
 C'est également possible de passer du code __HTML__ directement en utilisant la fonction du même nom :
@@ -388,7 +380,7 @@ fluidPage(
 Le package \og`shinydashboard`\fg{} (https://rstudio.github.io/shinydashboard/) propose d'autres fonctions pour créer des tableaux de bord :
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/dash.png")
+knitr::include_graphics("../../img/dash.png")
 ```
 
 ## Combiner les structures
@@ -396,14 +388,14 @@ knitr::include_graphics("img/dash.png")
 Toutes les structures peuvent s'utiliser en même temps !
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/struct.png")
+knitr::include_graphics("../../img/struct.png")
 ```
 
 
 # Les inputs
 
 ```{r, dpi=220, echo=FALSE}
-knitr::include_graphics('img/all_input.png')
+knitr::include_graphics('../../img/all_input.png')
 ```
 
 Dans la suite, nous donnons une liste non exhaustive de widgets disponibles. Il s'agit d'élements de base très largement utilisés par les développeurs dans le cadre d'applications simples ou complexes.
@@ -427,7 +419,7 @@ numericInput(inputId = "idNumeric", label = "Please select a number",
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/numeric.png')
+knitr::include_graphics('../../img/numeric.png')
 ```
 
 
@@ -447,7 +439,7 @@ textInput(inputId = "idText", label = "Enter a text", value = "")
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/text.png')
+knitr::include_graphics('../../img/text.png')
 ```
 
 ## Case de validation
@@ -467,7 +459,7 @@ checkboxInput(inputId = "idCheck1", label = "Check ?")
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/logical.png')
+knitr::include_graphics('../../img/logical.png')
 ```
 
 ## Bouton d'activation
@@ -488,7 +480,7 @@ actionButton(inputId = "idActionButton", label = "Click !",
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/action.png')
+knitr::include_graphics('../../img/action.png')
 ```
 
 ## Sélection: valeur(s), date, nombre
@@ -513,7 +505,7 @@ selectInput(inputId = "idSelect", label = "Select among the list: ", selected = 
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/unique_select.png')
+knitr::include_graphics('../../img/unique_select.png')
 ```
 
 ### Cases à choix multiples
@@ -535,7 +527,7 @@ checkboxGroupInput(inputId = "idCheckGroup", label = "Please select", selected =
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/multiple_checkbox.png')
+knitr::include_graphics('../../img/multiple_checkbox.png')
 ```
 
 ### Bouton de sélection
@@ -556,7 +548,7 @@ radioButtons(inputId = "idRadio", label = "Select one", selected = 3,
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/radio.png')
+knitr::include_graphics('../../img/radio.png')
 ```
 
 ### Sélecteur de date
@@ -580,7 +572,7 @@ dateInput(inputId = "idDate", label = "Please enter a date", value = "12/08/2015
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/date.png')
+knitr::include_graphics('../../img/date.png')
 ```
 
 #### Période
@@ -604,7 +596,7 @@ dateRangeInput(inputId = "idDateRange", label = "Please Select a date range",
 ```
 
 ```{r, out.width='60%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/date_range.png')
+knitr::include_graphics('../../img/date_range.png')
 ```
 
 ### Sélecteur numérique
@@ -630,7 +622,7 @@ sliderInput(inputId = "idSlider1", label = "Select a number", min = 0, max = 10,
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/slider.png')
+knitr::include_graphics('../../img/slider.png')
 ```
 
 #### Intervalle
@@ -654,7 +646,7 @@ sliderInput(inputId = "idSlider2", label = "Select a number", min = 0, max = 10,
 ```
 
 ```{r, out.width='50%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/multiple_slider.png')
+knitr::include_graphics('../../img/multiple_slider.png')
 ```
 
 ## Import d'un fichier
@@ -675,7 +667,7 @@ fileInput(inputId = "idFile", label = "Select a file")
 ```
 
 ```{r, out.width='70%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/file.png')
+knitr::include_graphics('../../img/file.png')
 ```
 
 ## Aller plus loin : construire son propre input
@@ -690,7 +682,7 @@ De même, deux applications sont données à titre d'exemples :
 # Outputs
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics('img/all_output.png')
+knitr::include_graphics('../../img/all_output.png')
 ```
 
 Les bonnes règles de construction :
@@ -727,7 +719,7 @@ output$texte <- renderText({
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/otext2.png")
+knitr::include_graphics("../../img/otext2.png")
 ```
 
 ### Affichage brute - Résultat console
@@ -747,7 +739,7 @@ output$texte <- renderPrint({
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/otext.png")
+knitr::include_graphics("../../img/otext.png")
 ```
 
 ## Graphique
@@ -767,7 +759,7 @@ output$myplot <- renderPlot({
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/oplot.png")
+knitr::include_graphics("../../img/oplot.png")
 ```
 
 ## Tableau
@@ -787,7 +779,7 @@ output$table <- renderTable({iris})
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/otable.png")
+knitr::include_graphics("../../img/otable.png")
 ```
 
 ### Tableau avancé : \og`dataTable`\fg
@@ -807,7 +799,7 @@ output$dataTable <- renderDataTable({
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/odatable.png")
+knitr::include_graphics("../../img/odatable.png")
 ```
 
 ## Définir des élements de l'UI côté SERVER
@@ -830,7 +822,7 @@ output$columns <- renderUI({
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/ui_output.png")
+knitr::include_graphics("../../img/ui_output.png")
 ```
 
 ### Exemple plus complexe
@@ -889,7 +881,7 @@ ui <- fluidPage(theme = "mytheme.css",
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/css1.png")
+knitr::include_graphics("../../img/css1.png")
 ```
 
 ## Ajout de propriétés dans l'en-tête
@@ -907,7 +899,7 @@ tags$head(
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/css2.png")
+knitr::include_graphics("../../img/css2.png")
 ```
 
 ## Modifier les propriétés d'un élément unique
@@ -920,7 +912,7 @@ h1("Mon titre", style = "color: #48ca3b;")
 ```
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/css3.png")
+knitr::include_graphics("../../img/css3.png")
 ```
 
 
@@ -956,11 +948,11 @@ dygraphOutput("dygraph")
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/dygraphs.png")
-knitr::include_graphics("img/leaflet.png")
-knitr::include_graphics("img/ramcharts.png")
-knitr::include_graphics("img/visnetwork.png")
-knitr::include_graphics("img/ggvis.png")
+knitr::include_graphics("../../img/dygraphs.png")
+knitr::include_graphics("../../img/leaflet.png")
+knitr::include_graphics("../../img/ramcharts.png")
+knitr::include_graphics("../../img/visnetwork.png")
+knitr::include_graphics("../../img/ggvis.png")
 ```
 
 # Isolation
@@ -1013,7 +1005,7 @@ shinyServer(function(input, output) {
 L'histogramme sera donc mis à jour quand l'utilisateur cliquera sur le bouton.
 
 ```{r, out.width='70%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/isolation.png")
+knitr::include_graphics("../../img/isolation.png")
 ```
 
 
@@ -1134,7 +1126,7 @@ server = function(input, output) {
 
 
 ```{r, out.width='80%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/RV.png")
+knitr::include_graphics("../../img/RV.png")
 ```
 
 
@@ -1206,11 +1198,11 @@ shinyServer(function(input, output, session) {
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/observer1.png")
+knitr::include_graphics("../../img/observer1.png")
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/observer2.png")
+knitr::include_graphics("../../img/observer2.png")
 ```
 
 
@@ -1305,7 +1297,7 @@ shinyApp(
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/cond1.png")
+knitr::include_graphics("../../img/cond1.png")
 ```
 
 
@@ -1324,7 +1316,7 @@ output$distPlot <- renderPlot({
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_cat.png")
+knitr::include_graphics("../../img/debug_cat.png")
 ```
 
 __Remarque importante__: bien que largement répandue, nous recommandons d'abandonner cette pratique au profit de l'utilisation de point(s) d'arrêt(s) lorsqu'il s'agit de rechercher des anomalies lors du développement. Lorsque l'instruction sera exécutée, l'application s'arrêtera et vous serez renvoyé à la console __R__ où il sera possible d'inspecter tous les objets disponibles\dots{} Très utiles, les points d'arrêt présentent l'avantage de ne pas nécessiter l'ajout d'instruction(s) dans le code (pas de risque d'oubli, la \og stack trace\fg{} n'est pas polluée).
@@ -1345,7 +1337,7 @@ output$distPlot <- renderPlot({
 - Ne pas oublier de l'enlever une fois le développement terminé...!
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_browser.png")
+knitr::include_graphics("../../img/debug_browser.png")
 ```
 
 ## Lancement automatique d'un browser
@@ -1366,7 +1358,7 @@ runApp("path/to/myapp", display.mode="showcase")
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_showcase.png")
+knitr::include_graphics("../../img/debug_showcase.png")
 ```
 
 ## Reactive log
@@ -1387,7 +1379,7 @@ output$distPlot <- renderPlot({
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_log.png")
+knitr::include_graphics("../../img/debug_log.png")
 ```
 
 ## Communication client/server
@@ -1399,7 +1391,7 @@ options(shiny.trace = TRUE)
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_trace.png")
+knitr::include_graphics("../../img/debug_trace.png")
 ```
 
 ## Traçage des erreurs
@@ -1413,7 +1405,7 @@ options(shiny.fullstacktrace = TRUE)
 ```
 
 ```{r, out.width='90%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/debug_stack.png")
+knitr::include_graphics("../../img/debug_stack.png")
 ```
 
 # Quelques bonnes pratiques
@@ -1453,15 +1445,15 @@ On peut déployer en interne nos applications shiny en installant un shiny-serve
 Une fois le serveur installé, il suffit de déposer les applications dans le répertoire dédié, et elles deviennent directement accessibles via l'adresse \og server:port_ou_redirection/nom_du_dossier\fg.
 
 ```{r, out.width='60%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/SS1.png")
-knitr::include_graphics("img/SS2.png")
-knitr::include_graphics("img/SS3.png")
+knitr::include_graphics("../../img/SS1.png")
+knitr::include_graphics("../../img/SS2.png")
+knitr::include_graphics("../../img/SS3.png")
 ```
 
 Des logs sont alors disponibles sous la forme de ``print console`` :
 
 ```{r, out.width='60%', dpi=220, fig.align='center', echo=FALSE}
-knitr::include_graphics("img/SS4.png")
+knitr::include_graphics("../../img/SS4.png")
 ```
 
 ## Références / Tutoriaux / Exemples
