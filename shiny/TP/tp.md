@@ -1,0 +1,90 @@
+---
+title: TP d'introduction à Shiny
+date: \today
+author:
+  - Benoit T., Jeffery P., Titouan R.
+output:
+  pdf_document:
+    latex_engine: xelatex
+    includes:
+      in_header: header.tex
+---
+
+# Premiers pas
+
+Créer un nouveau répertoire pour l'application shiny (__dans RStudio__):
+
+    File -> New Project -> New Directory -> Shiny Web Application
+
+Deux fichiers sont créés automatiquement : ui.R et server.R. Lancer directement l'application depuis RStudio via le bouton Run App (flèche verte) située en haut à droite du script.
+
+* Remplacer le titre de l'application par \og{}Premiers pas avec shiny\fg{}. 
+* Mettre à jour l'application et vérifier la prise en compte de la modification.
+
+# Quelques concepts-clés
+
+## Input - Output
+
+* Modifier l'input afin d'avoir un `numericInput` au lieu d'un `sliderInput` pour le contrôle du nombre de classes (bins).
+
+* Ajouter un input pour choisir la couleur de l'histogramme.
+
+* Ajouter un input pour proposer à l'utilisateur de choisir la colonne du jeu de données `faithful` qu'il souhaite représenter.
+
+* Permettre de renseigner le titre de l'histogramme.
+
+* Ajouter un texte sous le graphique spécifiant le nombre de classes (bins) de l'histogramme. _Indication : vous aurez besoin de créer un output dans le server._
+
+* Ajouter la visualisation des données `faithful` avec un `data.table` (``renderDataTable`` & ``dataTableOutput``).
+
+* Visualiser le ``summary`` des données `faithful`.
+
+* __Aller plus loin__ : Essayer de rajouter des options à la visualisation des données. Vous pouvez aller voir également le package complèmentaire DT - https://github.com/rstudio/DT. 
+
+* __Aller plus loin__ : Remplacer l'histogramme par un graphique dynamique en utilisant le package **rAmCharts**  - https://datastorm-open.github.io/introduction_ramcharts, fonction `amHist`.
+
+## Structure / HTML / CSS
+
+* Remplacer le `sidebarLayout` par une `fluidRow` (deux colonnes 1/3 - 2/3) afin d'obtenir visuellement la même application. _Indication : utiliser un `wellPanel` pour la colonne de gauche._
+
+* Restructurer votre application en partant d'une ``navbarPage`` : 
+    + Onglet *Data* : visualisation des données (table + summary)
+    + Onglet *Visualisation* : inputs + histogramme
+
+* Dans l'onglet de visualisation, rajouter un boxplot (``boxplot``). Utiliser un ``tabsetPanel`` pour mettre l'histogramme et le boxplot dans deux onglets distincts. Utiliser la même couleur que pour l'histogramme.
+
+* Ajouter un titre au tableau, de couleur bleu, en utilisant ``h1``, et en lui affectant un style ``css``.
+
+* Dans un troisième onglet, rédiger un petit texte. Essayer d'ajouter un image (``div`` & ``img``) et un lien vers un site internet (``a``). 
+
+* __Aller plus loin__ : changer le *thème* de l'application en insérant un ``.css`` externe (``tags$head`` & ``tags$link``). Par exemple en utilisant Bootswatch - https://bootswatch.com.
+
+* __Aller plus loin__ : utiliser shinydashboard - https://rstudio.github.io/shinydashboard - pour restructurer votre application.
+
+* __Aller plus loin__ : permettre à l'utilisateur d'exporter les graphiques. (``downloadButton`` & ``jpeg``)
+
+## Réactivité, isolation, observe
+
+* Ajouter un `actionButton` et modifier le code pour que les graphiques se mettent à  uniquement lorsque l'on clique sur le bouton.
+
+* Avec l'aide d'un $observe$, faire en sorte que, lors de la validation des paramètres avec l'`actionButton`, le graphique affiché en premier soit toujours l'histogramme. (``updateTabsetPanel``)
+
+* Laisser l'utilisateur choisir si il souhaite voir le tableau de données (avec ``checkboxInput`` par exemple), et utiliser un `conditionalPanel` pour contrôler l'affichage.
+
+* Actuellement, le code permettant de sélectionner les données représentées sur l'histogramme et sur le box-plot est dupliqué. Utiliser un ``reactive`` pour éviter de dupliquer ce code.
+
+# Créez votre application
+
+Pour clore cette formation Shiny, nous vous proposons la réalisation d'un mini-projet. Celui-ci consistera en la création d'une application Shiny, à partir d'un jeu de données de votre choix. 
+
+Vous pouvez vous inspirer des applications présentes sur les sites suivants : 
+
+* https://shiny.rstudio.com/gallery
+* https://www.showmeshiny.com
+
+Afin de customiser votre application selon vos envies, ajoutez une feuille de style css à votre projet. Vous pouvez vous inspirer des css du site suivant : 
+
+* https://bootswatch.com
+
+Et pourquoi ne pas utiliser quelques graphiques intéractifs ? https://gallery.htmlwidgets.org
+
